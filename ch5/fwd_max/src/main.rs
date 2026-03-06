@@ -1,0 +1,38 @@
+use ndarray::prelude::*;
+use rand_distr::{Distribution, Normal};
+
+fn relu(x: f64) -> f64 {
+    x.max(0.0)
+}
+
+fn relu_layer(x: Array1<f64>) -> Array1<f64> {
+    x.mapv(relu)
+}
+
+fn forward_pass(
+    x: Array1<f64>,
+    w1: Array2<f64>,
+    b1: Array1<f64>,
+    w2: Array2<f64>,
+    b2: Array1<f64>,
+) -> f64 {
+    let hidden = relu_layer(w1.dot(&x) + &b1);
+    let output = w2.dot(&hidden) + &b2;
+    output[0]
+}
+
+fn main() {
+    let input = array![0.3, 0.8, 0.5];
+
+    let mut rng = rand::rng();
+    let normal = Normal::new(0.0, 1.0).unwrap();
+
+    let w1 = Array::from_shape_fn((4, 3), |_| normal.sample(&mut rng));
+    let b1 = Array::from_shape_fn(4, |_| normal.sample(&mut rng));
+
+    let w2 = Array::from_shape_fn((1, 4), |_| normal.sample(&mut rng));
+    let b2 = Array::from_shape_fn(1, |_| normal.sample(&mut rng));
+
+    let result = forward_pass(input, w1, b1, w2, b2);
+    println!("Predicted output: {}", result);
+}

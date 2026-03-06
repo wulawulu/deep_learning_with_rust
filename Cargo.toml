@@ -1,0 +1,8 @@
+[workspace]
+members = ["ch5/autograd", "ch5/backprop-max", "ch5/exercise","ch5/fwd_max", "ch5/plotters-rs",
+    "ch5/random-gennerator",
+    "ch5/xor",
+]
+
+
+resolver = "3"
