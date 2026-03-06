@@ -9,14 +9,13 @@ fn main() {
     println!("df/dy = {}", df[1]);
 }
 
-
 #[cfg(test)]
-mod test{
+mod test {
     use super::*;
 
     #[test]
     fn test_grad1() {
-        let f = |x:FT<f64>|x.sin()+x.exp();
+        let f = |x: FT<f64>| x.sin() + x.exp();
 
         let df = diff(f, 1.0);
         println!("df = {}", df);

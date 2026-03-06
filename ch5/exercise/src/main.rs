@@ -44,13 +44,13 @@ mod tests {
     #[test]
     fn problem4() -> Result<(), Box<dyn std::error::Error>> {
         // 从 -5.0 开始，每次加 0.1，取到 5.0 为止
-        let points:Vec<(f64, f64)> = iterate(-5.0, |&x| x + 0.1)
+        let points: Vec<(f64, f64)> = iterate(-5.0, |&x| x + 0.1)
             .take_while(|&x| x <= 5.0 + 1e-10) // 加个极小值防止浮点数精度问题
-            .map(|x| (x, x.max(0.0))).collect(); // 计算 ReLU
+            .map(|x| (x, x.max(0.0)))
+            .collect(); // 计算 ReLU
 
         let root = BitMapBackend::new("training_loss.png", (800, 600)).into_drawing_area();
         root.fill(&WHITE)?;
-
 
         let mut chart = ChartBuilder::on(&root)
             .caption("Simulated Training Loss", ("sans-serif", 30))
@@ -66,10 +66,7 @@ mod tests {
             .draw()?;
 
         chart
-            .draw_series(LineSeries::new(
-                points,
-                &BLUE,
-            ))?
+            .draw_series(LineSeries::new(points, &BLUE))?
             .label("Loss")
             .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &BLUE));
 

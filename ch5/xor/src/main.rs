@@ -7,11 +7,7 @@ fn main() {
 }
 
 fn step(x: f64) -> u8 {
-    if x >= 0.0 {
-        1
-    } else {
-        0
-    }
+    if x >= 0.0 { 1 } else { 0 }
 }
 
 fn and(x: u8, y: u8) -> u8 {
